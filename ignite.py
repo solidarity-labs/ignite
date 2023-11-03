@@ -22,6 +22,7 @@ import argparse
 import json
 import boto3
 import base64
+import requests
 import subprocess
 from pprint import pprint
 
@@ -41,6 +42,9 @@ def main():
 
         elif args.aws == 'env':
             get_aws_from_env()
+
+        elif args.aws == 'metadata':
+            get_instance_metadata()
 
     elif args.subcommand == 'who':
         if args.profile:
@@ -70,6 +74,31 @@ def main():
             print(decoded_string)
 
 
+def get_instance_metadata():
+    url = 'http://169.254.169.254/latest/'
+    metadata = {}
+    
+    # Get instance ID
+    response = requests.get(url + 'meta-data/instance-id')
+    metadata['instance_id'] = response.text
+    
+    # Get instance profile
+    response = requests.get(url + 'meta-data/iam/info')
+    iam_info = response.json()
+    metadata['instance_profile_arn'] = iam_info['InstanceProfileArn']
+    
+    # Get temporary credentials
+    response = requests.get(url + 'meta-data/iam/security-credentials/')
+    role_name = response.text
+    
+    response = requests.get(url + f'meta-data/iam/security-credentials/{role_name}')
+    credentials = response.json()
+    metadata['access_key'] = credentials['AccessKeyId']
+    metadata['secret_key'] = credentials['SecretAccessKey']
+    metadata['session_token'] = credentials['Token']
+    
+    print(metadata)
+    return metadata
 
 
 def get_aws_credentials_file(output_file):
