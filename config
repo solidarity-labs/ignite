@@ -1,0 +1,35 @@
+[default]
+region = sa-east-1
+output = json
+[profile ops]
+sso_start_url = https://solidaritylabs.awsapps.com/start#/
+sso_region = us-east-1
+sso_account_id = 065229260063
+sso_role_name = AdministratorAccess
+region = sa-east-1
+output = json
+sso_session = ops
+[profile redspace]
+sso_session = redspace
+sso_account_id = 928885104494
+sso_role_name = AdministratorAccess
+region = sa-east-1
+output = json
+[sso-session redspace]
+sso_start_url = https://solidaritylabs.awsapps.com/start#/
+sso_region = us-east-1
+sso_registration_scopes = sso:account:access
+[profile demo-env]
+sso_session = demo-env
+sso_account_id = 389580225666
+sso_role_name = AdministratorAccess
+region = sa-east-1
+output = json
+[sso-session demo-env]
+sso_start_url = https://solidaritylabs.awsapps.com/start#/
+sso_region = us-east-1
+sso_registration_scopes = sso:account:access
+[sso-session ops]
+sso_start_url = https://solidaritylabs.awsapps.com/start#/
+sso_region = us-east-1
+sso_registration_scopes = sso:account:access

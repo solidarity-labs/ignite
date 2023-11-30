@@ -1,5 +1,15 @@
+import os
+import argparse
+import json
+import boto3
+import base64
+import requests
+import subprocess
+from pprint import pprint
+
 '''
 Cloud Credentials Gathering
+WANNABE
 
 * Passive
     - credentials files
@@ -13,18 +23,10 @@ Cloud Credentials Gathering
     - Check lateral movement and persistance permissions
     - Session token restore?
 
-python3 ignite --gather aws | credentials | role | lambda | user_data > json file with configs
-
+python3 ignite.py gather --aws <credentials | role | lambda | user_data | metadata> > json file with configss
 
 '''
-import os
-import argparse
-import json
-import boto3
-import base64
-import requests
-import subprocess
-from pprint import pprint
+
 
 def main():
     args = parse_args()
